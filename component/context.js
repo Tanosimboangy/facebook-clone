@@ -9,10 +9,10 @@ function ContextProvider({children}) {
 		setData(dataJson)
     }, [data]);
 
+    // Incrementing the like vaue anytime the button is clicked
     function likeBtn(itemId) {
         const newList = dataJson.map(item => {
             if (item.id === itemId) {
-                console.log(item.like);
                 return {
                     ...item,
                     like: item.like ++,

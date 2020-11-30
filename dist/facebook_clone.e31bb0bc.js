@@ -33972,12 +33972,11 @@ function ContextProvider(_ref) {
 
   (0, _react.useEffect)(function () {
     setData(_data.default);
-  }, [data]);
+  }, [data]); // Incrementing the like vaue anytime the button is clicked
 
   function likeBtn(itemId) {
     var newList = _data.default.map(function (item) {
       if (item.id === itemId) {
-        console.log(item.like);
         return _objectSpread(_objectSpread({}, item), {}, {
           like: item.like++
         });
@@ -35989,7 +35988,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    padding: 16px;\n    max-width: 201px;\n    li {\n        padding-bottom: 16px;\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        justify-content: space-between;\n    }\n"]);
+  var data = _taggedTemplateLiteral(["\n    padding: 16px;\n    li {\n        padding-bottom: 16px;\n        p {\n            max-width: 201px;\n        }\n        ul {\n            display: flex;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            max-width: 201px;\n        }\n    }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -36014,14 +36013,14 @@ function Feed() {
   }, data.map(function (item) {
     return /*#__PURE__*/_react.default.createElement(ListOfPost, {
       key: item.id
-    }, /*#__PURE__*/_react.default.createElement("li", null, item.username, " ", item.date), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, item.username), /*#__PURE__*/_react.default.createElement("li", null, item.date))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("p", null, item.comments)), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
       src: item.url
-    })), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("button", {
+    })), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("button", {
       type: "button",
       onClick: function onClick() {
         return likeBtn(item.id);
       }
-    }, "Like"), " ", item.like));
+    }, "Like")), /*#__PURE__*/_react.default.createElement("li", null, item.like))));
   }));
 }
 
