@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding: 16px;
   font-family: Arial, Helvetica, sans-serif;
 }
 body ul {
@@ -11,6 +12,17 @@ body ul li {
 }
 body a {
   text-decoration: none;
+}
+body h1, body h2, body h3, body h4, body h5, body h6, body p {
+  margin: 0;
+}
+
+@media (min-width: 720px) {
+  body {
+    padding: 0;
+    max-width: 600px;
+    margin: auto;
+  }
 }
 
 /*# sourceMappingURL=/facebook_clone.80ee2152.css.map */
