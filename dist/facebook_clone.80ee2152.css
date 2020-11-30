@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body ul {
+  padding: 0;
+  margin: 0;
+}
+body ul li {
+  list-style: none;
+}
+body a {
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=/facebook_clone.80ee2152.css.map */
