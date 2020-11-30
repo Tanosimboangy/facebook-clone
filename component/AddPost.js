@@ -4,7 +4,7 @@ import { Context } from "./context";
 
 
 function AddPost() {
-    const { setData } = useContext(Context);
+    const { data, setData } = useContext(Context);
 
     const [textvalue, setTextvalue] = useState("");
     const [url, setUrl] = useState("");
@@ -23,18 +23,18 @@ function AddPost() {
             url: url,
             // like,
         };
-        setData(newPost);
+        data(newPost);
         setTextvalue(" ");
         setUrl(" ");
     }
     
 
     return (
-        <form onSubmit={handleNewPost}>
+        <form onSubmit={handleNewPost} className="add_post">
             <label htmlFor="text">New post:</label>
             <textarea value={textvalue} onChange={e => setTextvalue(e.currentTarget.value)} id="text" cols="35" rows="10" required/>
-            <label htmlFor="url">Picture  url:</label>
-            <input value={url} onChange={e => setUrl(e.currentTarget.value)} id="url" type="url" required/>
+            <label htmlFor="url">Picture  url: <input value={url} onChange={e => setUrl(e.currentTarget.value)} id="url" type="url" required/>
+            </label>
             <button type="submit">Post</button>
         </form>
     )

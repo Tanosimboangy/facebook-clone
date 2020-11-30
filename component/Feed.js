@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
 import { Context } from "./context";
-import styled from 'styled-components';
-
-// box-shadow: 2px 2px 10px black;
-// border-radius: 12px;
-    
+// import styled from 'styled-components';    
 
 function Feed() {
     const { data } = useContext(Context);
     const { likeBtn } = useContext(Context);
+    
     return (
         <div className="feed_container">
             {data.map(item => {
