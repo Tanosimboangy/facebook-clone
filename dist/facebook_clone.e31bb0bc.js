@@ -33904,21 +33904,21 @@ module.exports = [{
   "username": "Jacquit",
   "date": 1606721873171,
   "comments": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-  "url": "https://picsum.photos/200/300",
+  "url": "https://picsum.photos/300/300",
   "like": 30
 }, {
   "id": 1606721873151,
   "username": "Franccois",
   "date": 1606721873151,
   "comments": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-  "url": "https://picsum.photos/seed/picsum/200/300",
+  "url": "https://picsum.photos/seed/picsum/300/300",
   "like": 8
 }, {
   "id": 1606121873151,
   "username": "Valentino",
   "date": 1606121873151,
   "comments": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-  "url": "https://picsum.photos/200",
+  "url": "https://picsum.photos/300",
   "like": 10
 }];
 },{}],"component/context.js":[function(require,module,exports) {
@@ -33995,7 +33995,15 @@ function ContextProvider(_ref) {
       likeBtn: likeBtn
     }
   }, children);
-}
+} // const [data, setData] = useState([]);
+// // Fetching the data and storing it into the state
+// useEffect(() => {
+//     const posts = JSON.parse(localStorage.getItem('data'));
+//     posts ? setData(posts) : setData(dataJson);
+// }, []);
+// useEffect(() => {
+//     localStorage.setItem('data', JSON.stringify(dataJson));
+// }, [dataJson]);
 },{"react":"node_modules/react/index.js","../data.json":"data.json"}],"node_modules/shallowequal/index.js":[function(require,module,exports) {
 //
 
@@ -35987,20 +35995,8 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    padding: 16px;\n    li {\n        padding-bottom: 16px;\n        p {\n            max-width: 201px;\n        }\n        ul {\n            display: flex;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            max-width: 201px;\n        }\n    }\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-var ListOfPost = _styledComponents.default.ul(_templateObject());
-
+// box-shadow: 2px 2px 10px black;
+// border-radius: 12px;
 function Feed() {
   var _useContext = (0, _react.useContext)(_context.Context),
       data = _useContext.data;
@@ -36011,16 +36007,19 @@ function Feed() {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "feed_container"
   }, data.map(function (item) {
-    return /*#__PURE__*/_react.default.createElement(ListOfPost, {
+    return /*#__PURE__*/_react.default.createElement("article", {
+      className: "article_post",
       key: item.id
-    }, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, item.username), /*#__PURE__*/_react.default.createElement("li", null, item.date))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("p", null, item.comments)), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
+      src: item.url
+    })), /*#__PURE__*/_react.default.createElement("li", null, item.username), /*#__PURE__*/_react.default.createElement("li", null, item.date))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("p", null, item.comments)), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
       src: item.url
     })), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("button", {
       type: "button",
       onClick: function onClick() {
         return likeBtn(item.id);
       }
-    }, "Like")), /*#__PURE__*/_react.default.createElement("li", null, item.like))));
+    }, "Like")), /*#__PURE__*/_react.default.createElement("li", null, item.like)))));
   }));
 }
 
@@ -36034,17 +36033,89 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _context = require("./context");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function AddPost() {
-  return /*#__PURE__*/_react.default.createElement("div", null);
+  var _useContext = (0, _react.useContext)(_context.Context),
+      setData = _useContext.setData;
+
+  var _useState = (0, _react.useState)(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      textvalue = _useState2[0],
+      setTextvalue = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(""),
+      _useState4 = _slicedToArray(_useState3, 2),
+      url = _useState4[0],
+      setUrl = _useState4[1];
+
+  function handleNewPost(e) {
+    e.preventDefault();
+    var el = e.target.value;
+    setTextvalue(el);
+    setUrl(el);
+    var newPost = {
+      id: Date.now(),
+      // username: username,
+      // date: Date.now(),
+      comments: textvalue,
+      url: url // like,
+
+    };
+    setData(newPost);
+    setTextvalue(" ");
+    setUrl(" ");
+  }
+
+  return /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: handleNewPost
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "text"
+  }, "New post:"), /*#__PURE__*/_react.default.createElement("textarea", {
+    value: textvalue,
+    onChange: function onChange(e) {
+      return setTextvalue(e.currentTarget.value);
+    },
+    id: "text",
+    cols: "35",
+    rows: "10",
+    required: true
+  }), /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "url"
+  }, "Picture  url:"), /*#__PURE__*/_react.default.createElement("input", {
+    value: url,
+    onChange: function onChange(e) {
+      return setUrl(e.currentTarget.value);
+    },
+    id: "url",
+    type: "url",
+    required: true
+  }), /*#__PURE__*/_react.default.createElement("button", {
+    type: "submit"
+  }, "Post"));
 }
 
 var _default = AddPost;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"component/Username.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./context":"component/context.js"}],"component/Username.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36085,7 +36156,7 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flec-direction: row;\n    align-items= center;\n    justify-content: space-between;\n"]);
+  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flec-direction: row;\n    align-items= center;\n    justify-content: space-between;\n    padding-left: 16px; \n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -36163,7 +36234,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59327" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64305" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

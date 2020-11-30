@@ -10,6 +10,7 @@ const List = styled.ul`
     flec-direction: row;
     align-items= center;
     justify-content: space-between;
+    padding-left: 16px; 
 `
 
 function App() {

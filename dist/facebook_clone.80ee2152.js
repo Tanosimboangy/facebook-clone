@@ -189,7 +189,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"C:\\Users\\Jaccquit\\code\\facebook_clone\\fonts\\Lato-Bold.woff2":[["Lato-Bold.a497623e.woff2","fonts/Lato-Bold.woff2"],"fonts/Lato-Bold.woff2"],"C:\\Users\\Jaccquit\\code\\facebook_clone\\fonts\\Lato-Bold.woff":[["Lato-Bold.2ba61289.woff","fonts/Lato-Bold.woff"],"fonts/Lato-Bold.woff"],"C:\\Users\\Jaccquit\\code\\facebook_clone\\fonts\\Lato-Regular.woff2":[["Lato-Regular.1c034558.woff2","fonts/Lato-Regular.woff2"],"fonts/Lato-Regular.woff2"],"C:\\Users\\Jaccquit\\code\\facebook_clone\\fonts\\Lato-Regular.woff":[["Lato-Regular.5200f20d.woff","fonts/Lato-Regular.woff"],"fonts/Lato-Regular.woff"],"C:\\Users\\Jaccquit\\code\\facebook_clone\\fonts\\Lato-Thin.woff2":[["Lato-Thin.2164ab69.woff2","fonts/Lato-Thin.woff2"],"fonts/Lato-Thin.woff2"],"C:\\Users\\Jaccquit\\code\\facebook_clone\\fonts\\Lato-Thin.woff":[["Lato-Thin.51524ccd.woff","fonts/Lato-Thin.woff"],"fonts/Lato-Thin.woff"],"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59327" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64305" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

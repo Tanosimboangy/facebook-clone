@@ -30,3 +30,15 @@ function ContextProvider({children}) {
     )
 }
 export  { ContextProvider, Context }
+
+
+// const [data, setData] = useState([]);
+// // Fetching the data and storing it into the state
+// useEffect(() => {
+//     const posts = JSON.parse(localStorage.getItem('data'));
+//     posts ? setData(posts) : setData(dataJson);
+
+// }, []);
+// useEffect(() => {
+//     localStorage.setItem('data', JSON.stringify(dataJson));
+// }, [dataJson]);
