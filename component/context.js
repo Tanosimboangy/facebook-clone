@@ -1,39 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useReducer } from 'react';
 import dataJson from "../data.json";
 const Context = React.createContext();
 
-function ContextProvider({children}) {
-    const [data, setData] = useState([]);
-
-    // Fetching the data and storing it into the state
-    useEffect(() => {
-        const posts = JSON.parse(localStorage.getItem('data'));
-        posts ? setData(posts) : setData(dataJson);
-    
-    }, []);
-    useEffect(() => {
-        localStorage.setItem('data', JSON.stringify(dataJson));
-    }, [dataJson]);
-
-    // Incrementing the like vaue anytime the button is clicked
-    function likeBtn(itemId) {
-        const newList = dataJson.map(item => {
-            if (item.id === itemId) {
-                return {
-                    ...item,
-                    like: item.like ++,
-                }
+function fetchReducer(data, action) {
+    const [state, dispatch] = useReducer((state, action) => {
+        switch(action.type) {
+            case 'GETTING_DATA':{
+                return dataJson
             }
-            return item;
-        });
-        setData(newList);
-    }
-
-    if (!data.length) return null;
-
-    return(
-        <Context.Provider value={{data, likeBtn}}>{children}</Context.Provider>
-    )
+            case 'SET_NAME': {
+                return { ...state, name: state.name = action.name }
+            }
+            default: {
+                return state
+            }
+        }
+    }, {
+        name: '',
+    })
+    return [state, dispatch]
 }
-export  { ContextProvider, Context }
 
+function ContextProvider({children}) {
+    const [data, dispatch] = useReducer(fetchReducer, dataJson);
+    const actions = {
+        stateUnchanged: (user) => {
+            if (user) {
+                dispatch({ type: 'GETTING_DATA', payload: dataJson });
+                } 
+            },
+        }
+    return(
+        <Context.Provider value={{data, actions, dispatch}}>{children}</Context.Provider>)}
+export  { ContextProvider, Context }

@@ -1,11 +1,8 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-// import styled from 'styled-components';
 import { Context } from "./context";
 
-
 function AddPost() {
-    const { data, setData } = useContext(Context);
-
+    const { data, dataJson } = useContext(Context);
     const [textvalue, setTextvalue] = useState("");
     const [url, setUrl] = useState("");
     let focusRef = useRef(null);
@@ -16,15 +13,12 @@ function AddPost() {
         setTextvalue(el);
         setUrl(el);
 
-        const newPost = {
-            id: Date.now(),
-            // username: username,
-            // date: Date.now(),
-            comments: textvalue,
-            url: url,
-            like: 0,
-        };
-        data(newPost);
+        // const newPost = {
+        //     id: Date.now(),
+        //     comments: textvalue,
+        //     url: url,
+        // };
+        // dataJson(newPost);
         setTextvalue(" ");
         setUrl(" ");
     }

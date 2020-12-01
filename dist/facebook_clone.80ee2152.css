@@ -36,12 +36,12 @@ body .feed_container .article_post {
   padding: 16px;
   max-width: 250px;
   margin-bottom: 16px;
-  box-shadow: 1px 1px 5px blue;
+  box-shadow: 0px 0px 2px blue;
   border-radius: 12px;
   margin-top: 20px;
 }
 body .feed_container .article_post li {
-  padding-bottom: 16px;
+  padding-bottom: 6px;
 }
 body .feed_container .article_post li ul {
   display: flex;

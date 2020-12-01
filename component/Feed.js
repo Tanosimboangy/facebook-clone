@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
-import { Context } from "./context";
-// import styled from 'styled-components';    
+import { Context } from "./context";   
 
 function Feed() {
-    const { data } = useContext(Context);
-    const { likeBtn } = useContext(Context);
+    const { data, dispatch } = useContext(Context);
+
+    // function handleSubmit(e) {
+    //     console.log(e.parentElement);
+    // }   
     
     return (
         <div className="feed_container">
@@ -19,18 +21,38 @@ function Feed() {
                                     <li>{item.date}</li>
                                 </ul>
                             </li>
-                            <li><p>{item.comments}</p></li>
+                            <li><p>{item.description}</p></li>
                             <li><img src={item.url} /></li>
                             <li>
                                 <ul>
-                                    <li><button type="button" onClick={() => likeBtn(item.id)}>Like</button></li>
+                                    <li><button type="button">Like</button></li>
                                     <li>{item.like}</li>
                                 </ul>
                             </li>
                         </ul>
-                        {/* <form>
-                            
-                        </form> */}
+                        {item.comments.map(items => {
+                            return (
+                                <ul key={items.id}>
+                                    <li>
+                                        <ul>
+                                            <li><img src={items.url} /></li>
+                                            <li>{items.username}</li>
+                                            <li>{items.date}</li>
+                                        </ul>
+                                    </li>
+                                    <li>{item.description}</li>
+                                </ul>
+                            )
+                        })}
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => {
+                                    dispatch({type: 'ON_CHANGE', name: e.target.value})
+                                }}
+                            />
+                        </form>
                     </article>
                 )
             })}
