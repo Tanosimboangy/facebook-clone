@@ -33968,11 +33968,16 @@ function ContextProvider(_ref) {
   var _useState = (0, _react.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       data = _useState2[0],
-      setData = _useState2[1];
+      setData = _useState2[1]; // Fetching the data and storing it into the state
+
 
   (0, _react.useEffect)(function () {
-    setData(_data.default);
-  }, [data]); // Incrementing the like vaue anytime the button is clicked
+    var posts = JSON.parse(localStorage.getItem('data'));
+    posts ? setData(posts) : setData(_data.default);
+  }, []);
+  (0, _react.useEffect)(function () {
+    localStorage.setItem('data', JSON.stringify(_data.default));
+  }, [_data.default]); // Incrementing the like vaue anytime the button is clicked
 
   function likeBtn(itemId) {
     var newList = _data.default.map(function (item) {
@@ -33995,15 +34000,7 @@ function ContextProvider(_ref) {
       likeBtn: likeBtn
     }
   }, children);
-} // const [data, setData] = useState([]);
-// // Fetching the data and storing it into the state
-// useEffect(() => {
-//     const posts = JSON.parse(localStorage.getItem('data'));
-//     posts ? setData(posts) : setData(dataJson);
-// }, []);
-// useEffect(() => {
-//     localStorage.setItem('data', JSON.stringify(dataJson));
-// }, [dataJson]);
+}
 },{"react":"node_modules/react/index.js","../data.json":"data.json"}],"component/Feed.js":[function(require,module,exports) {
 "use strict";
 
@@ -34092,6 +34089,8 @@ function AddPost() {
       url = _useState4[0],
       setUrl = _useState4[1];
 
+  var focusRef = (0, _react.useRef)(null);
+
   function handleNewPost(e) {
     e.preventDefault();
     var el = e.target.value;
@@ -34102,20 +34101,24 @@ function AddPost() {
       // username: username,
       // date: Date.now(),
       comments: textvalue,
-      url: url // like,
-
+      url: url,
+      like: 0
     };
     data(newPost);
     setTextvalue(" ");
     setUrl(" ");
   }
 
+  (0, _react.useEffect)(function () {
+    focusRef.current.focus();
+  }, []);
   return /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: handleNewPost,
     className: "add_post"
   }, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "text"
   }, "New post:"), /*#__PURE__*/_react.default.createElement("textarea", {
+    ref: focusRef,
     value: textvalue,
     onChange: function onChange(e) {
       return setTextvalue(e.currentTarget.value);
@@ -36231,7 +36234,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64305" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55271" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

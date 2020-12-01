@@ -5,9 +5,15 @@ const Context = React.createContext();
 function ContextProvider({children}) {
     const [data, setData] = useState([]);
 
+    // Fetching the data and storing it into the state
     useEffect(() => {
-		setData(dataJson)
-    }, [data]);
+        const posts = JSON.parse(localStorage.getItem('data'));
+        posts ? setData(posts) : setData(dataJson);
+    
+    }, []);
+    useEffect(() => {
+        localStorage.setItem('data', JSON.stringify(dataJson));
+    }, [dataJson]);
 
     // Incrementing the like vaue anytime the button is clicked
     function likeBtn(itemId) {
@@ -31,14 +37,3 @@ function ContextProvider({children}) {
 }
 export  { ContextProvider, Context }
 
-
-// const [data, setData] = useState([]);
-// // Fetching the data and storing it into the state
-// useEffect(() => {
-//     const posts = JSON.parse(localStorage.getItem('data'));
-//     posts ? setData(posts) : setData(dataJson);
-
-// }, []);
-// useEffect(() => {
-//     localStorage.setItem('data', JSON.stringify(dataJson));
-// }, [dataJson]);
