@@ -2,11 +2,20 @@ import React, { useContext } from 'react';
 import { Context } from "./context";   
 
 function Feed() {
-    const { data, dispatch } = useContext(Context);
+    const { data } = useContext(Context);
 
-    // function handleSubmit(e) {
-    //     console.log(e.parentElement);
-    // }   
+    function increments(itemId) {
+        const newList = data.map(item => {
+            if (item.id === itemId) {
+                return {
+                    ...item,
+                    like: item.like + 1,
+                }
+            }
+            return item;
+        });
+        setAllSongs(newList);
+    }
     
     return (
         <div className="feed_container">
@@ -44,14 +53,9 @@ function Feed() {
                                 </ul>
                             )
                         })}
-                        <form onSubmit={handleSubmit}>
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => {
-                                    dispatch({type: 'ON_CHANGE', name: e.target.value})
-                                }}
-                            />
+                        <form onSubmit={e => newComment(e, id)}>
+                            <input type="text" name="newComment"/>
+                            <button type="submit">Post</button>
                         </form>
                     </article>
                 )

@@ -34009,10 +34009,10 @@ function fetchReducer(data, action) {
           return _data.default;
         }
 
-      case 'SET_NAME':
+      case "ADD_COMMENTS":
         {
           return _objectSpread(_objectSpread({}, state), {}, {
-            name: state.name = action.name
+            item: action.comment
           });
         }
 
@@ -34022,13 +34022,46 @@ function fetchReducer(data, action) {
         }
     }
   }, {
-    name: ''
+    state: [],
+    comment: ''
   }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
 
   return [state, dispatch];
+}
+
+function newComment(e, id) {
+  console.log(id);
+  e.preventDefault();
+  var el = e.target;
+  console.log(e.target);
+  var addComment = {
+    "comment": el.comment.value,
+    "id": Date.now(),
+    "date": Date.now()
+  };
+  console.log(addComment);
+
+  _data.default.map(function (item) {
+    console.log(item.id);
+
+    if (item.id === id) {
+      console.log(item.comments);
+      return _objectSpread(_objectSpread({}, item), {}, {
+        comments: item.comments.push(addComment)
+      });
+    }
+
+    return item, console.log(item.id), console.log(item.comments);
+  });
+
+  dispatch({
+    type: "ADD_COMMENTS",
+    updatedComment: item
+  });
+  e.target.comment.value = "";
 }
 
 function ContextProvider(_ref) {
@@ -34039,24 +34072,14 @@ function ContextProvider(_ref) {
       data = _useReducer4[0],
       dispatch = _useReducer4[1];
 
-  var actions = {
-    stateUnchanged: function stateUnchanged(user) {
-      if (user) {
-        dispatch({
-          type: 'GETTING_DATA',
-          payload: _data.default
-        });
-      }
-    }
-  };
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: {
       data: data,
-      actions: actions,
+      newComment: newComment,
       dispatch: dispatch
     }
   }, children);
-}
+} // new Date().toLocaleDateString()
 },{"react":"node_modules/react/index.js","../data.json":"data.json"}],"component/Feed.js":[function(require,module,exports) {
 "use strict";
 
@@ -34073,13 +34096,28 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function Feed() {
   var _useContext = (0, _react.useContext)(_context.Context),
-      data = _useContext.data,
-      dispatch = _useContext.dispatch; // function handleSubmit(e) {
-  //     console.log(e.parentElement);
-  // }   
+      data = _useContext.data;
 
+  function increments(itemId) {
+    var newList = data.map(function (item) {
+      if (item.id === itemId) {
+        return _objectSpread(_objectSpread({}, item), {}, {
+          like: item.like + 1
+        });
+      }
+
+      return item;
+    });
+    setAllSongs(newList);
+  }
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "feed_container"
@@ -34100,17 +34138,15 @@ function Feed() {
         src: items.url
       })), /*#__PURE__*/_react.default.createElement("li", null, items.username), /*#__PURE__*/_react.default.createElement("li", null, items.date))), /*#__PURE__*/_react.default.createElement("li", null, item.description));
     }), /*#__PURE__*/_react.default.createElement("form", {
-      onSubmit: handleSubmit
+      onSubmit: function onSubmit(e) {
+        return newComment(e, id);
+      }
     }, /*#__PURE__*/_react.default.createElement("input", {
       type: "text",
-      value: name,
-      onChange: function onChange(e) {
-        dispatch({
-          type: 'ON_CHANGE',
-          name: e.target.value
-        });
-      }
-    })));
+      name: "newComment"
+    }), /*#__PURE__*/_react.default.createElement("button", {
+      type: "submit"
+    }, "Post")));
   }));
 }
 
@@ -34146,8 +34182,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function AddPost() {
   var _useContext = (0, _react.useContext)(_context.Context),
-      data = _useContext.data,
-      dataJson = _useContext.dataJson;
+      data = _useContext.data;
 
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
@@ -34165,13 +34200,15 @@ function AddPost() {
     e.preventDefault();
     var el = e.target.value;
     setTextvalue(el);
-    setUrl(el); // const newPost = {
-    //     id: Date.now(),
-    //     comments: textvalue,
-    //     url: url,
-    // };
-    // dataJson(newPost);
-
+    setUrl(el);
+    console.log(textvalue);
+    console.log(url);
+    var newPost = {
+      id: Date.now(),
+      comments: textvalue,
+      url: url
+    };
+    data.push(newPost);
     setTextvalue(" ");
     setUrl(" ");
   }
@@ -34229,7 +34266,24 @@ function Username() {
 
 var _default = Username;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"node_modules/shallowequal/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"user.json":[function(require,module,exports) {
+module.exports = [{
+  "id": 1606823845128,
+  "name": "Mahasoa",
+  "profile": "https://picsum.photos/100",
+  "birthDate": "13/09/2000"
+}, {
+  "id": 1606823868716,
+  "name": "Franck",
+  "profile": "https://picsum.photos/100",
+  "birthDate": "13/02/1991"
+}, {
+  "id": 1606823892049,
+  "name": "Jo",
+  "profile": "https://picsum.photos/100",
+  "birthDate": "29/01/2003"
+}];
+},{}],"node_modules/shallowequal/index.js":[function(require,module,exports) {
 //
 
 module.exports = function shallowEqual(objA, objB, compare, compareContext) {
@@ -36218,9 +36272,21 @@ var _AddPost = _interopRequireDefault(require("../component/AddPost"));
 
 var _Username = _interopRequireDefault(require("../component/Username"));
 
+var _user = _interopRequireDefault(require("../user.json"));
+
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flec-direction: row;\n    align-items= center;\n    justify-content: space-between;\n    li:nth-of-type(2) {\n        img {\n            border-radius: 25px;\n            max-width: 50px;\n        }\n    }\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
 
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n    display: flex;\n    flec-direction: row;\n    align-items= center;\n    justify-content: space-between;\n    padding-left: 16px; \n"]);
@@ -36236,14 +36302,24 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var List = _styledComponents.default.ul(_templateObject());
 
+var ProfileUser = _styledComponents.default.ul(_templateObject2());
+
 function App() {
+  var username = _user.default.map(function (item) {
+    return /*#__PURE__*/_react.default.createElement(ProfileUser, {
+      key: item.id
+    }, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("p", null, item.name)), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
+      src: item.profile
+    })));
+  });
+
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "ONJA FACEBOOK"), /*#__PURE__*/_react.default.createElement(List, null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/"
   }, "Feed"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/addPost"
   }, "Add a post"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "username"
-  }, "Username")))), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+  }, username)))), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/"
   }, /*#__PURE__*/_react.default.createElement(_Feed.default, null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
@@ -36257,7 +36333,7 @@ function App() {
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../component/Feed":"component/Feed.js","../component/AddPost":"component/AddPost.js","../component/Username":"component/Username.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../component/Feed":"component/Feed.js","../component/AddPost":"component/AddPost.js","../component/Username":"component/Username.js","../user.json":"user.json","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
