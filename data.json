@@ -5,7 +5,7 @@
      "date": 1606805013727,
      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
      "url":"https://picsum.photos/300/300",
-     "like": 30,
+     "like": 0,
      "comments": [
             {
                 "id": 1606804999664,
@@ -29,7 +29,7 @@
      "date": 1606805097283,
      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
      "url":"https://picsum.photos/seed/picsum/300/300",
-     "like": 8,
+     "like": 0,
     "comments": [
         {
             "id": 1606805115855,
@@ -53,7 +53,7 @@
      "date": 1606805191566,
      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
      "url":"https://picsum.photos/300",
-     "like": 10,
+     "like": 0,
      "comments": [
         {
             "id": 1606805213164,

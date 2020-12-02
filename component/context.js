@@ -6,7 +6,7 @@ function ContextProvider({children}) {
     const [state, dispatch] = useReducer((state, action) => {
         switch(action.type) {
             case 'GETTING_DATA':{
-                return {...state, data: action.data};
+                return {...state, data:  action.data};
             }
             default: {
                 return state;
@@ -57,7 +57,8 @@ function ContextProvider({children}) {
             "date": Date.now(),
             "description": text.value,
             "url": url.value,
-            "like": 0, 
+            "like": "", 
+            "comments": []
         };
         dispatch({type: "GETTING_DATA", data: [...data, newPost]})
         e.target.reset();

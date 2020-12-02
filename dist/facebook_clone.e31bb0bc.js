@@ -33905,7 +33905,7 @@ module.exports = [{
   "date": 1606805013727,
   "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
   "url": "https://picsum.photos/300/300",
-  "like": 30,
+  "like": 0,
   "comments": [{
     "id": 1606804999664,
     "url": "https://picsum.photos/300/300",
@@ -33925,7 +33925,7 @@ module.exports = [{
   "date": 1606805097283,
   "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
   "url": "https://picsum.photos/seed/picsum/300/300",
-  "like": 8,
+  "like": 0,
   "comments": [{
     "id": 1606805115855,
     "url": "https://picsum.photos/300/300",
@@ -33945,7 +33945,7 @@ module.exports = [{
   "date": 1606805191566,
   "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
   "url": "https://picsum.photos/300",
-  "like": 10,
+  "like": 0,
   "comments": [{
     "id": 1606805213164,
     "url": "https://picsum.photos/300/300",
@@ -34083,7 +34083,8 @@ function ContextProvider(_ref) {
       "date": Date.now(),
       "description": text.value,
       "url": url.value,
-      "like": 0
+      "like": "",
+      "comments": []
     };
     dispatch({
       type: "GETTING_DATA",
@@ -34121,13 +34122,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function Feed() {
   var _useContext = (0, _react.useContext)(_context.Context),
-      state = _useContext.state,
+      data = _useContext.data,
       newComment = _useContext.newComment;
 
-  console.log(state.data);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "feed_container"
-  }, state.data.map(function (item) {
+  }, data.map(function (item) {
     return /*#__PURE__*/_react.default.createElement("article", {
       className: "article_post",
       key: item.id
@@ -36338,7 +36338,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58654" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56108" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
