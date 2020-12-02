@@ -34017,21 +34017,7 @@ function ContextProvider(_ref) {
       case 'GETTING_DATA':
         {
           return _objectSpread(_objectSpread({}, state), {}, {
-            data: state.data = action.data
-          });
-        }
-
-      case 'NEW_COMMENTS':
-        {
-          return _objectSpread(_objectSpread({}, state), {}, {
-            data: state.comments = action.addNewComments
-          });
-        }
-
-      case 'NEW_POST':
-        {
-          return _objectSpread(_objectSpread({}, state), {}, {
-            data: action.addNewPost
+            data: action.data
           });
         }
 
@@ -34062,8 +34048,7 @@ function ContextProvider(_ref) {
 
   function newComment(e, id) {
     e.preventDefault();
-    var el = e.target;
-    var comment = el.comment;
+    var comment = e.target.comment;
     var addComment = {
       "id": Date.now(),
       "url": "https://picsum.photos/300/300",
@@ -34100,22 +34085,21 @@ function ContextProvider(_ref) {
       "url": url.value,
       "like": 0
     };
-    var newData = data.push(newPost);
     dispatch({
       type: "GETTING_DATA",
-      data: newData
+      data: [].concat(_toConsumableArray(data), [newPost])
     });
-    console.log(data);
     e.target.reset();
-  } // new Date().toLocaleDateString()
-
+    console.log(data);
+  }
 
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: {
       data: data,
       newComment: newComment,
       dispatch: dispatch,
-      handleNewPost: handleNewPost
+      handleNewPost: handleNewPost,
+      state: state
     }
   }, children);
 }
@@ -34137,12 +34121,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function Feed() {
   var _useContext = (0, _react.useContext)(_context.Context),
-      data = _useContext.data,
+      state = _useContext.state,
       newComment = _useContext.newComment;
 
+  console.log(state.data);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "feed_container"
-  }, data.map(function (item) {
+  }, state.data.map(function (item) {
     return /*#__PURE__*/_react.default.createElement("article", {
       className: "article_post",
       key: item.id

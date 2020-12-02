@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { Context } from "./context";   
 
 function Feed() {
-    const { data, newComment } = useContext(Context);
+    const { state, newComment } = useContext(Context);
+    console.log(state.data);
     
     return (
         <div className="feed_container">
-            {data.map(item => {
+            {state.data.map(item => {
                 return (
                     <article className="article_post" key={item.id}>
                         <ul>

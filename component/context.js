@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import dataJson from "../data.json";
 const Context = React.createContext();
 
@@ -6,13 +6,7 @@ function ContextProvider({children}) {
     const [state, dispatch] = useReducer((state, action) => {
         switch(action.type) {
             case 'GETTING_DATA':{
-                return {...state, data: state.data = action.data};
-            }
-            case 'NEW_COMMENTS':{
-                return {...state, data: state.comments = action.addNewComments}
-            }
-            case 'NEW_POST':{
-                return {...state, data: action.addNewPost}
+                return {...state, data: action.data};
             }
             default: {
                 return state;
@@ -21,7 +15,7 @@ function ContextProvider({children}) {
     }, {
         data: [],
     })
-
+    
     let{ data }= state;
     if (!data) {
         return null;
@@ -29,11 +23,10 @@ function ContextProvider({children}) {
     useEffect(() => {
         dispatch({type:"GETTING_DATA", data: dataJson});
     }, [])
-
+    
     function newComment(e, id) { 
         e.preventDefault();
-        const el = e.target;
-        const {comment} = el;
+        const {comment} = e.target;
         const addComment = {
             "id": Date.now(),
             "url": "https://picsum.photos/300/300",
@@ -53,7 +46,6 @@ function ContextProvider({children}) {
         dispatch({type: "GETTING_DATA", data: updatedList})
         e.target.reset();
     }
-
     
     function handleNewPost(e) {
         e.preventDefault();
@@ -67,13 +59,11 @@ function ContextProvider({children}) {
             "url": url.value,
             "like": 0, 
         };
-        const newData = data.push(newPost)
-        dispatch({type: "GETTING_DATA", data: newData})
-        console.log(data);
+        dispatch({type: "GETTING_DATA", data: [...data, newPost]})
         e.target.reset();
-
+        console.log(data);
     }
-    // new Date().toLocaleDateString()
+
     return(
         <Context.Provider 
             value={{
@@ -81,6 +71,7 @@ function ContextProvider({children}) {
                 newComment,
                 dispatch,
                 handleNewPost,
+                state
             }}>
                 {children}
         </Context.Provider>)}
