@@ -3,8 +3,6 @@ import dataJson from "../data.json";
 const Context = React.createContext();
 
 function ContextProvider({children}) {
-    const [textvalue, setTextvalue] = useState("");
-    const [url, setUrl] = useState("");
     const [state, dispatch] = useReducer((state, action) => {
         switch(action.type) {
             case 'GETTING_DATA':{
@@ -12,6 +10,9 @@ function ContextProvider({children}) {
             }
             case 'NEW_COMMENTS':{
                 return {...state, data: state.comments = action.addNewComments}
+            }
+            case 'NEW_POST':{
+                return {...state, data: action.addNewPost}
             }
             default: {
                 return state;
@@ -38,9 +39,8 @@ function ContextProvider({children}) {
             "url": "https://picsum.photos/300/300",
             "username": "jacquit",
             "comment": comment.value,
-            "date": Date.now(),
+            "date": new Date().toLocaleDateString(),
         }
-        console.log(addComment);
         const updatedList = data.map(item => {
             if (item.id === id) {
                 return {
@@ -51,39 +51,39 @@ function ContextProvider({children}) {
             return item
         })
         dispatch({type: "GETTING_DATA", data: updatedList})
-        console.log(updatedList);
+        e.target.reset();
     }
+
     
+    function handleNewPost(e) {
+        e.preventDefault();
+        const el = e.target;
+        const {text, url} = el;
+        const newPost = {
+            "id": Date.now(),
+            "username": "Franccois",
+            "date": Date.now(),
+            "description": text.value,
+            "url": url.value,
+            "like": 0, 
+        };
+        const newData = data.push(newPost)
+        dispatch({type: "GETTING_DATA", data: newData})
+        console.log(data);
+        e.target.reset();
+
+    }
+    // new Date().toLocaleDateString()
     return(
         <Context.Provider 
             value={{
                 data,
-                textvalue,
-                setTextvalue,
-                setUrl,
                 newComment,
-                url,
                 dispatch,
+                handleNewPost,
             }}>
                 {children}
         </Context.Provider>)}
 
 export  { ContextProvider, Context }
 
-// new Date().toLocaleDateString()
-// function handleNewPost(e) {
-//     e.preventDefault();
-//     const el = e.target.value;
-//     setTextvalue(el);
-//     setUrl(el);
-
-//     const newPost = {
-//         id: Date.now(),
-//         comments: textvalue,
-//         url: url,
-//     };
-//     console.log(newPost);
-//     data.push(newPost);
-//     setTextvalue(" ");
-//     setUrl(" ");
-// }

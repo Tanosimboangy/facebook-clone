@@ -28,14 +28,14 @@ const ProfileUser = styled.ul`
 
 function App() {
     
-    const username = users.map((item) => {
-        return (
-            <ProfileUser key={item.id}>
-                <li><p>{item.name}</p></li>
-                <li><img src={item.profile} /></li>
-            </ProfileUser>
-        )
-    })
+    // const username = users.map((item) => {
+    //     return (
+    //         <ProfileUser key={item.id}>
+    //             <li><p>{item.name}</p></li>
+    //             <li><img src={item.profile} /></li>
+    //         </ProfileUser>
+    //     )
+    // })
 
     return (
         <div>
@@ -43,7 +43,8 @@ function App() {
             <List>
                 <li><h2><Link to="/">Feed</Link></h2></li>
                 <li><h2><Link to="/addPost">Add a post</Link></h2></li>
-                <li><h2><Link to="username">{username}</Link></h2></li>
+                <li><h2><Link to="username">UserName</Link></h2></li>
+                {/* <li><h2><Link to="username">{username}</Link></h2></li> */}
             </List>
             <Switch>
                 <Route exact path="/">

@@ -34012,16 +34012,6 @@ exports.Context = Context;
 function ContextProvider(_ref) {
   var children = _ref.children;
 
-  var _useState = (0, _react.useState)(""),
-      _useState2 = _slicedToArray(_useState, 2),
-      textvalue = _useState2[0],
-      setTextvalue = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(""),
-      _useState4 = _slicedToArray(_useState3, 2),
-      url = _useState4[0],
-      setUrl = _useState4[1];
-
   var _useReducer = (0, _react.useReducer)(function (state, action) {
     switch (action.type) {
       case 'GETTING_DATA':
@@ -34035,6 +34025,13 @@ function ContextProvider(_ref) {
         {
           return _objectSpread(_objectSpread({}, state), {}, {
             data: state.comments = action.addNewComments
+          });
+        }
+
+      case 'NEW_POST':
+        {
+          return _objectSpread(_objectSpread({}, state), {}, {
+            data: action.addNewPost
           });
         }
 
@@ -34072,9 +34069,8 @@ function ContextProvider(_ref) {
       "url": "https://picsum.photos/300/300",
       "username": "jacquit",
       "comment": comment.value,
-      "date": Date.now()
+      "date": new Date().toLocaleDateString()
     };
-    console.log(addComment);
     var updatedList = data.map(function (item) {
       if (item.id === id) {
         return _objectSpread(_objectSpread({}, item), {}, {
@@ -34088,36 +34084,41 @@ function ContextProvider(_ref) {
       type: "GETTING_DATA",
       data: updatedList
     });
-    console.log(updatedList);
+    e.target.reset();
   }
+
+  function handleNewPost(e) {
+    e.preventDefault();
+    var el = e.target;
+    var text = el.text,
+        url = el.url;
+    var newPost = {
+      "id": Date.now(),
+      "username": "Franccois",
+      "date": Date.now(),
+      "description": text.value,
+      "url": url.value,
+      "like": 0
+    };
+    var newData = data.push(newPost);
+    dispatch({
+      type: "GETTING_DATA",
+      data: newData
+    });
+    console.log(data);
+    e.target.reset();
+  } // new Date().toLocaleDateString()
+
 
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: {
       data: data,
-      textvalue: textvalue,
-      setTextvalue: setTextvalue,
-      setUrl: setUrl,
       newComment: newComment,
-      url: url,
-      dispatch: dispatch
+      dispatch: dispatch,
+      handleNewPost: handleNewPost
     }
   }, children);
-} // new Date().toLocaleDateString()
-// function handleNewPost(e) {
-//     e.preventDefault();
-//     const el = e.target.value;
-//     setTextvalue(el);
-//     setUrl(el);
-//     const newPost = {
-//         id: Date.now(),
-//         comments: textvalue,
-//         url: url,
-//     };
-//     console.log(newPost);
-//     data.push(newPost);
-//     setTextvalue(" ");
-//     setUrl(" ");
-// }
+}
 },{"react":"node_modules/react/index.js","../data.json":"data.json"}],"component/Feed.js":[function(require,module,exports) {
 "use strict";
 
@@ -34156,7 +34157,7 @@ function Feed() {
         key: items.id
       }, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
         src: items.url
-      })), /*#__PURE__*/_react.default.createElement("li", null, items.username), /*#__PURE__*/_react.default.createElement("li", null, items.date))), /*#__PURE__*/_react.default.createElement("li", null, item.description));
+      })), /*#__PURE__*/_react.default.createElement("li", null, items.username), /*#__PURE__*/_react.default.createElement("li", null, items.date))), /*#__PURE__*/_react.default.createElement("li", null, items.comment));
     }), /*#__PURE__*/_react.default.createElement("form", {
       onSubmit: function onSubmit(e) {
         return newComment(e, item.id);
@@ -34191,11 +34192,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function AddPost() {
   var _useContext = (0, _react.useContext)(_context.Context),
-      handleNewPost = _useContext.handleNewPost,
-      textvalue = _useContext.textvalue,
-      setTextvalue = _useContext.setTextvalue,
-      url = _useContext.url,
-      setUrl = _useContext.setUrl;
+      handleNewPost = _useContext.handleNewPost;
 
   var focusRef = (0, _react.useRef)(null);
   (0, _react.useEffect)(function () {
@@ -34208,10 +34205,7 @@ function AddPost() {
     htmlFor: "text"
   }, "New post:"), /*#__PURE__*/_react.default.createElement("textarea", {
     ref: focusRef,
-    value: textvalue,
-    onChange: function onChange(e) {
-      return setTextvalue(e.currentTarget.value);
-    },
+    name: "text",
     id: "text",
     cols: "35",
     rows: "10",
@@ -34219,10 +34213,7 @@ function AddPost() {
   }), /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "url"
   }, "Picture  url: ", /*#__PURE__*/_react.default.createElement("input", {
-    value: url,
-    onChange: function onChange(e) {
-      return setUrl(e.currentTarget.value);
-    },
+    name: "url",
     id: "url",
     type: "url",
     required: true
@@ -36290,21 +36281,21 @@ var List = _styledComponents.default.ul(_templateObject());
 var ProfileUser = _styledComponents.default.ul(_templateObject2());
 
 function App() {
-  var username = _user.default.map(function (item) {
-    return /*#__PURE__*/_react.default.createElement(ProfileUser, {
-      key: item.id
-    }, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("p", null, item.name)), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("img", {
-      src: item.profile
-    })));
-  });
-
+  // const username = users.map((item) => {
+  //     return (
+  //         <ProfileUser key={item.id}>
+  //             <li><p>{item.name}</p></li>
+  //             <li><img src={item.profile} /></li>
+  //         </ProfileUser>
+  //     )
+  // })
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "ONJA FACEBOOK"), /*#__PURE__*/_react.default.createElement(List, null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/"
   }, "Feed"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "/addPost"
   }, "Add a post"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
     to: "username"
-  }, username)))), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+  }, "UserName")))), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/"
   }, /*#__PURE__*/_react.default.createElement(_Feed.default, null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {

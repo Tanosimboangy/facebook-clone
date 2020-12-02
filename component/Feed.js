@@ -36,7 +36,7 @@ function Feed() {
                                             <li>{items.date}</li>
                                         </ul>
                                     </li>
-                                    <li>{item.description}</li>
+                                    <li>{items.comment}</li>
                                 </ul>
                             )
                         })}
