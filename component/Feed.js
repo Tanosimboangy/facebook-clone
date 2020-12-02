@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Context } from "./context";   
 
 function Feed() {
-    const { data } = useContext(Context);
+    const { data, newComment } = useContext(Context);
     
     return (
         <div className="feed_container">
@@ -40,8 +40,8 @@ function Feed() {
                                 </ul>
                             )
                         })}
-                        <form onSubmit={e => newComment(e, id)}>
-                            <input type="text" name="newComment"/>
+                        <form onSubmit={e => newComment(e, item.id)}>
+                            <input type="text" name="comment" required/>
                             <button type="submit">Post</button>
                         </form>
                     </article>

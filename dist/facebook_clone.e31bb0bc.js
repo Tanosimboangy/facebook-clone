@@ -33979,6 +33979,20 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -33995,33 +34009,6 @@ var Context = _react.default.createContext();
 
 exports.Context = Context;
 
-function fetchReducer(data, action) {
-  var _useReducer = (0, _react.useReducer)(function (state, action) {
-    switch (action.type) {
-      case 'GETTING_DATA':
-        {
-          return _data.default;
-        }
-      // case 'ON_SUBMIT':{
-      //     return (...state, data: state.data = )
-      // }
-
-      default:
-        {
-          return state;
-        }
-    }
-  }, {
-    state: [],
-    comment: ''
-  }),
-      _useReducer2 = _slicedToArray(_useReducer, 2),
-      state = _useReducer2[0],
-      dispatch = _useReducer2[1];
-
-  return [state, dispatch];
-}
-
 function ContextProvider(_ref) {
   var children = _ref.children;
 
@@ -34035,59 +34022,101 @@ function ContextProvider(_ref) {
       url = _useState4[0],
       setUrl = _useState4[1];
 
-  var _useReducer3 = (0, _react.useReducer)(fetchReducer, _data.default),
-      _useReducer4 = _slicedToArray(_useReducer3, 2),
-      data = _useReducer4[0],
-      dispatch = _useReducer4[1];
+  var _useReducer = (0, _react.useReducer)(function (state, action) {
+    switch (action.type) {
+      case 'GETTING_DATA':
+        {
+          return _objectSpread(_objectSpread({}, state), {}, {
+            data: state.data = action.data
+          });
+        }
 
-  function handleNewPost(e) {
+      case 'NEW_COMMENTS':
+        {
+          return _objectSpread(_objectSpread({}, state), {}, {
+            data: state.comments = action.addNewComments
+          });
+        }
+
+      default:
+        {
+          return state;
+        }
+    }
+  }, {
+    data: []
+  }),
+      _useReducer2 = _slicedToArray(_useReducer, 2),
+      state = _useReducer2[0],
+      dispatch = _useReducer2[1];
+
+  var data = state.data;
+
+  if (!data) {
+    return null;
+  }
+
+  (0, _react.useEffect)(function () {
+    dispatch({
+      type: "GETTING_DATA",
+      data: _data.default
+    });
+  }, []);
+
+  function newComment(e, id) {
     e.preventDefault();
-    var el = e.target.value;
-    setTextvalue(el);
-    setUrl(el);
-    var newPost = {
-      id: Date.now(),
-      comments: textvalue,
-      url: url
+    var el = e.target;
+    var comment = el.comment;
+    var addComment = {
+      "id": Date.now(),
+      "url": "https://picsum.photos/300/300",
+      "username": "jacquit",
+      "comment": comment.value,
+      "date": Date.now()
     };
-    data.push(newPost);
-    setTextvalue(" ");
-    setUrl(" ");
+    console.log(addComment);
+    var updatedList = data.map(function (item) {
+      if (item.id === id) {
+        return _objectSpread(_objectSpread({}, item), {}, {
+          comments: [].concat(_toConsumableArray(item.comments), [addComment])
+        });
+      }
+
+      return item;
+    });
+    dispatch({
+      type: "GETTING_DATA",
+      data: updatedList
+    });
+    console.log(updatedList);
   }
 
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: {
       data: data,
-      handleNewPost: handleNewPost,
       textvalue: textvalue,
       setTextvalue: setTextvalue,
       setUrl: setUrl,
+      newComment: newComment,
       url: url,
       dispatch: dispatch
     }
   }, children);
 } // new Date().toLocaleDateString()
-// function newComment(e, id) { 
+// function handleNewPost(e) {
 //     e.preventDefault();
-//     const el = e.target;
-//     console.log(el);
-//     const addComment = {
-//         "id": Date.now(),
-//         "comment": el.comment.value,
-//         "date": Date.now(),
-//     }
-//      dataJson.map(item => {
-//          console.log(item);
-//         if (item.id === id) {
-//             console.log(item.comments);
-//             return {
-//                 ...item,
-//                 comments: item.comments.push(addComment)
-//             }
-//         }
-//         return item,
-//         console.log(item)
-//     })
+//     const el = e.target.value;
+//     setTextvalue(el);
+//     setUrl(el);
+//     const newPost = {
+//         id: Date.now(),
+//         comments: textvalue,
+//         url: url,
+//     };
+//     console.log(newPost);
+//     data.push(newPost);
+//     setTextvalue(" ");
+//     setUrl(" ");
 // }
 },{"react":"node_modules/react/index.js","../data.json":"data.json"}],"component/Feed.js":[function(require,module,exports) {
 "use strict";
@@ -34107,7 +34136,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function Feed() {
   var _useContext = (0, _react.useContext)(_context.Context),
-      data = _useContext.data;
+      data = _useContext.data,
+      newComment = _useContext.newComment;
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "feed_container"
@@ -34129,11 +34159,12 @@ function Feed() {
       })), /*#__PURE__*/_react.default.createElement("li", null, items.username), /*#__PURE__*/_react.default.createElement("li", null, items.date))), /*#__PURE__*/_react.default.createElement("li", null, item.description));
     }), /*#__PURE__*/_react.default.createElement("form", {
       onSubmit: function onSubmit(e) {
-        return newComment(e, id);
+        return newComment(e, item.id);
       }
     }, /*#__PURE__*/_react.default.createElement("input", {
       type: "text",
-      name: "newComment"
+      name: "comment",
+      required: true
     }), /*#__PURE__*/_react.default.createElement("button", {
       type: "submit"
     }, "Post")));
