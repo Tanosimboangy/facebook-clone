@@ -33979,12 +33979,6 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -34008,13 +34002,9 @@ function fetchReducer(data, action) {
         {
           return _data.default;
         }
-
-      case "ADD_COMMENTS":
-        {
-          return _objectSpread(_objectSpread({}, state), {}, {
-            item: action.comment
-          });
-        }
+      // case 'ON_SUBMIT':{
+      //     return (...state, data: state.data = )
+      // }
 
       default:
         {
@@ -34032,54 +34022,73 @@ function fetchReducer(data, action) {
   return [state, dispatch];
 }
 
-function newComment(e, id) {
-  console.log(id);
-  e.preventDefault();
-  var el = e.target;
-  console.log(e.target);
-  var addComment = {
-    "comment": el.comment.value,
-    "id": Date.now(),
-    "date": Date.now()
-  };
-  console.log(addComment);
-
-  _data.default.map(function (item) {
-    console.log(item.id);
-
-    if (item.id === id) {
-      console.log(item.comments);
-      return _objectSpread(_objectSpread({}, item), {}, {
-        comments: item.comments.push(addComment)
-      });
-    }
-
-    return item, console.log(item.id), console.log(item.comments);
-  });
-
-  dispatch({
-    type: "ADD_COMMENTS",
-    updatedComment: item
-  });
-  e.target.comment.value = "";
-}
-
 function ContextProvider(_ref) {
   var children = _ref.children;
+
+  var _useState = (0, _react.useState)(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      textvalue = _useState2[0],
+      setTextvalue = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(""),
+      _useState4 = _slicedToArray(_useState3, 2),
+      url = _useState4[0],
+      setUrl = _useState4[1];
 
   var _useReducer3 = (0, _react.useReducer)(fetchReducer, _data.default),
       _useReducer4 = _slicedToArray(_useReducer3, 2),
       data = _useReducer4[0],
       dispatch = _useReducer4[1];
 
+  function handleNewPost(e) {
+    e.preventDefault();
+    var el = e.target.value;
+    setTextvalue(el);
+    setUrl(el);
+    var newPost = {
+      id: Date.now(),
+      comments: textvalue,
+      url: url
+    };
+    data.push(newPost);
+    setTextvalue(" ");
+    setUrl(" ");
+  }
+
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: {
       data: data,
-      newComment: newComment,
+      handleNewPost: handleNewPost,
+      textvalue: textvalue,
+      setTextvalue: setTextvalue,
+      setUrl: setUrl,
+      url: url,
       dispatch: dispatch
     }
   }, children);
 } // new Date().toLocaleDateString()
+// function newComment(e, id) { 
+//     e.preventDefault();
+//     const el = e.target;
+//     console.log(el);
+//     const addComment = {
+//         "id": Date.now(),
+//         "comment": el.comment.value,
+//         "date": Date.now(),
+//     }
+//      dataJson.map(item => {
+//          console.log(item);
+//         if (item.id === id) {
+//             console.log(item.comments);
+//             return {
+//                 ...item,
+//                 comments: item.comments.push(addComment)
+//             }
+//         }
+//         return item,
+//         console.log(item)
+//     })
+// }
 },{"react":"node_modules/react/index.js","../data.json":"data.json"}],"component/Feed.js":[function(require,module,exports) {
 "use strict";
 
@@ -34096,28 +34105,9 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function Feed() {
   var _useContext = (0, _react.useContext)(_context.Context),
       data = _useContext.data;
-
-  function increments(itemId) {
-    var newList = data.map(function (item) {
-      if (item.id === itemId) {
-        return _objectSpread(_objectSpread({}, item), {}, {
-          like: item.like + 1
-        });
-      }
-
-      return item;
-    });
-    setAllSongs(newList);
-  }
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "feed_container"
@@ -34168,51 +34158,15 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 function AddPost() {
   var _useContext = (0, _react.useContext)(_context.Context),
-      data = _useContext.data;
-
-  var _useState = (0, _react.useState)(""),
-      _useState2 = _slicedToArray(_useState, 2),
-      textvalue = _useState2[0],
-      setTextvalue = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(""),
-      _useState4 = _slicedToArray(_useState3, 2),
-      url = _useState4[0],
-      setUrl = _useState4[1];
+      handleNewPost = _useContext.handleNewPost,
+      textvalue = _useContext.textvalue,
+      setTextvalue = _useContext.setTextvalue,
+      url = _useContext.url,
+      setUrl = _useContext.setUrl;
 
   var focusRef = (0, _react.useRef)(null);
-
-  function handleNewPost(e) {
-    e.preventDefault();
-    var el = e.target.value;
-    setTextvalue(el);
-    setUrl(el);
-    console.log(textvalue);
-    console.log(url);
-    var newPost = {
-      id: Date.now(),
-      comments: textvalue,
-      url: url
-    };
-    data.push(newPost);
-    setTextvalue(" ");
-    setUrl(" ");
-  }
-
   (0, _react.useEffect)(function () {
     focusRef.current.focus();
   }, []);
@@ -36377,7 +36331,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57509" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58654" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

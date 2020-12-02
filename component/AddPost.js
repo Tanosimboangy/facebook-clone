@@ -1,29 +1,9 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, { useEffect, useRef, useContext} from 'react';
 import { Context } from "./context";
 
 function AddPost() {
-    const { data } = useContext(Context);
-    const [textvalue, setTextvalue] = useState("");
-    const [url, setUrl] = useState("");
-    let focusRef = useRef(null);
-
-    function handleNewPost(e) {
-        e.preventDefault();
-        const el = e.target.value;
-        setTextvalue(el);
-        setUrl(el);
-        console.log(textvalue);
-        console.log(url);
-
-        const newPost = {
-            id: Date.now(),
-            comments: textvalue,
-            url: url,
-        };
-        data.push(newPost);
-        setTextvalue(" ");
-        setUrl(" ");
-    }
+    const { handleNewPost, textvalue, setTextvalue, url, setUrl } = useContext(Context);
+    let focusRef = useRef(null)
     
     useEffect(() => {
 		focusRef.current.focus()

@@ -3,19 +3,6 @@ import { Context } from "./context";
 
 function Feed() {
     const { data } = useContext(Context);
-
-    function increments(itemId) {
-        const newList = data.map(item => {
-            if (item.id === itemId) {
-                return {
-                    ...item,
-                    like: item.like + 1,
-                }
-            }
-            return item;
-        });
-        setAllSongs(newList);
-    }
     
     return (
         <div className="feed_container">
