@@ -1,49 +1,57 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { createContext, useReducer } from 'react';
 import dataJson from "../data.json";
-const Context = React.createContext();
+import users from "../user.json";
+
+const Context = createContext();
 
 function ContextProvider({children}) {
     const [state, dispatch] = useReducer((state, action) => {
         switch(action.type) {
-            case 'GETTING_DATA':{
-                return {...state, data:  action.data};
+            case 'ADD_NEW_POST': {
+                return {
+                    ...state,
+                    data: [...state.data, action.newPost],
+                }
+            }
+            case 'UPDATE_COMMENTS_POSTS': {
+                return {
+                    ...state,
+                    data: [...state.data, action.updatedList],
+                }
             }
             default: {
-                return state;
+                console.error("Action is done!");
+                break;
             }
         }
+        return state;
     }, {
-        data: [],
+        data: dataJson,
+        usersData: users,
     })
-    
-    let{ data }= state;
-    if (!data) {
-        return null;
-    }
-    useEffect(() => {
-        dispatch({type:"GETTING_DATA", data: dataJson});
-    }, [])
-    
+
+    let { data } = state;
+
     function newComment(e, id) { 
         e.preventDefault();
         const {comment} = e.target;
         const addComment = {
-            "id": Date.now(),
-            "url": "https://picsum.photos/300/300",
-            "username": "jacquit",
-            "comment": comment.value,
-            "date": new Date().toLocaleDateString(),
-        }
-        const updatedList = data.map(item => {
+                "id": Date.now(),
+                "url": "https://picsum.photos/300/300",
+                "username": "jacquit",
+                "comment": comment.value,
+                "date": new Date().toLocaleDateString(),
+            }
+            const updatedList = data.map(item => {
             if (item.id === id) {
-                return {
+                    return {
                     ...item,
                     comments: [...item.comments, addComment]
                 }
             }
             return item
         })
-        dispatch({type: "GETTING_DATA", data: updatedList})
+        dispatch({type: "UPDATE_COMMENTS_POSTS", data: updatedList})
         e.target.reset();
     }
     
@@ -60,22 +68,19 @@ function ContextProvider({children}) {
             "like": "", 
             "comments": []
         };
-        dispatch({type: "GETTING_DATA", data: [...data, newPost]})
+        dispatch({type: "ADD_NEW_POST", newPost: newPost})
         e.target.reset();
         console.log(data);
     }
-
+    
     return(
         <Context.Provider 
             value={{
-                data,
-                newComment,
+                state,
                 dispatch,
-                handleNewPost,
-                state
+                newComment,
+                handleNewPost
             }}>
                 {children}
         </Context.Provider>)}
-
 export  { ContextProvider, Context }
-

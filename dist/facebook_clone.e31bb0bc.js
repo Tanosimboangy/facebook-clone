@@ -33960,6 +33960,23 @@ module.exports = [{
     "comment": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
   }]
 }];
+},{}],"user.json":[function(require,module,exports) {
+module.exports = [{
+  "id": 1606823845128,
+  "name": "Mahasoa",
+  "profile": "https://picsum.photos/100",
+  "birthDate": "13/09/2000"
+}, {
+  "id": 1606823868716,
+  "name": "Franck",
+  "profile": "https://picsum.photos/100",
+  "birthDate": "13/02/1991"
+}, {
+  "id": 1606823892049,
+  "name": "Jo",
+  "profile": "https://picsum.photos/100",
+  "birthDate": "29/01/2003"
+}];
 },{}],"component/context.js":[function(require,module,exports) {
 "use strict";
 
@@ -33972,6 +33989,8 @@ exports.Context = void 0;
 var _react = _interopRequireWildcard(require("react"));
 
 var _data = _interopRequireDefault(require("../data.json"));
+
+var _user = _interopRequireDefault(require("../user.json"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34005,8 +34024,7 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var Context = _react.default.createContext();
-
+var Context = (0, _react.createContext)();
 exports.Context = Context;
 
 function ContextProvider(_ref) {
@@ -34014,37 +34032,37 @@ function ContextProvider(_ref) {
 
   var _useReducer = (0, _react.useReducer)(function (state, action) {
     switch (action.type) {
-      case 'GETTING_DATA':
+      case 'ADD_NEW_POST':
         {
           return _objectSpread(_objectSpread({}, state), {}, {
-            data: action.data
+            data: [].concat(_toConsumableArray(state.data), [action.newPost])
+          });
+        }
+
+      case 'UPDATE_COMMENTS_POSTS':
+        {
+          return _objectSpread(_objectSpread({}, state), {}, {
+            data: [].concat(_toConsumableArray(state.data), [action.updatedList])
           });
         }
 
       default:
         {
-          return state;
+          console.error("Action is done!");
+          break;
         }
     }
+
+    return state;
   }, {
-    data: []
+    data: _data.default,
+    usersData: _user.default
   }),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
 
   var data = state.data;
-
-  if (!data) {
-    return null;
-  }
-
-  (0, _react.useEffect)(function () {
-    dispatch({
-      type: "GETTING_DATA",
-      data: _data.default
-    });
-  }, []);
 
   function newComment(e, id) {
     e.preventDefault();
@@ -34066,7 +34084,7 @@ function ContextProvider(_ref) {
       return item;
     });
     dispatch({
-      type: "GETTING_DATA",
+      type: "UPDATE_COMMENTS_POSTS",
       data: updatedList
     });
     e.target.reset();
@@ -34087,8 +34105,8 @@ function ContextProvider(_ref) {
       "comments": []
     };
     dispatch({
-      type: "GETTING_DATA",
-      data: [].concat(_toConsumableArray(data), [newPost])
+      type: "ADD_NEW_POST",
+      newPost: newPost
     });
     e.target.reset();
     console.log(data);
@@ -34096,15 +34114,14 @@ function ContextProvider(_ref) {
 
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
     value: {
-      data: data,
-      newComment: newComment,
+      state: state,
       dispatch: dispatch,
-      handleNewPost: handleNewPost,
-      state: state
+      newComment: newComment,
+      handleNewPost: handleNewPost
     }
   }, children);
 }
-},{"react":"node_modules/react/index.js","../data.json":"data.json"}],"component/Feed.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../data.json":"data.json","../user.json":"user.json"}],"component/Feed.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34122,9 +34139,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function Feed() {
   var _useContext = (0, _react.useContext)(_context.Context),
-      data = _useContext.data,
+      state = _useContext.state,
       newComment = _useContext.newComment;
 
+  var data = state.data;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "feed_container"
   }, data.map(function (item) {
@@ -34227,24 +34245,7 @@ function Username() {
 
 var _default = Username;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"user.json":[function(require,module,exports) {
-module.exports = [{
-  "id": 1606823845128,
-  "name": "Mahasoa",
-  "profile": "https://picsum.photos/100",
-  "birthDate": "13/09/2000"
-}, {
-  "id": 1606823868716,
-  "name": "Franck",
-  "profile": "https://picsum.photos/100",
-  "birthDate": "13/02/1991"
-}, {
-  "id": 1606823892049,
-  "name": "Jo",
-  "profile": "https://picsum.photos/100",
-  "birthDate": "29/01/2003"
-}];
-},{}],"node_modules/shallowequal/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"node_modules/shallowequal/index.js":[function(require,module,exports) {
 //
 
 module.exports = function shallowEqual(objA, objB, compare, compareContext) {
@@ -36215,7 +36216,49 @@ exports.ServerStyleSheet = Ue;
 "production" !== "development" && "undefined" != typeof navigator && "ReactNative" === navigator.product && console.warn("It looks like you've imported 'styled-components' on React Native.\nPerhaps you're looking to import 'styled-components/native'?\nRead more about this at https://www.styled-components.com/docs/basics#react-native"), "production" !== "development" && "test" !== "development" && (window["__styled-components-init__"] = window["__styled-components-init__"] || 0, 1 === window["__styled-components-init__"] && console.warn("It looks like there are several instances of 'styled-components' initialized in this application. This may cause dynamic styles to not render properly, errors during the rehydration process, a missing theme prop, and makes your application bigger without good reason.\n\nSee https://s-c.sh/2BAXzed for more info."), window["__styled-components-init__"] += 1);
 var _default = qe;
 exports.default = _default;
-},{"react-is":"node_modules/react-is/index.js","react":"node_modules/react/index.js","shallowequal":"node_modules/shallowequal/index.js","@emotion/stylis":"node_modules/@emotion/stylis/dist/stylis.browser.esm.js","@emotion/unitless":"node_modules/@emotion/unitless/dist/unitless.browser.esm.js","@emotion/is-prop-valid":"node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js","hoist-non-react-statics":"node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js","process":"../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js"}],"component/App.js":[function(require,module,exports) {
+},{"react-is":"node_modules/react-is/index.js","react":"node_modules/react/index.js","shallowequal":"node_modules/shallowequal/index.js","@emotion/stylis":"node_modules/@emotion/stylis/dist/stylis.browser.esm.js","@emotion/unitless":"node_modules/@emotion/unitless/dist/unitless.browser.esm.js","@emotion/is-prop-valid":"node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js","hoist-non-react-statics":"node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js","process":"../../AppData/Roaming/npm/node_modules/parcel-bundler/node_modules/process/browser.js"}],"component/Menu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var NavStyles = _styledComponents.default.ul(_templateObject());
+
+function Menu() {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "ONJA FACEBOOK"), /*#__PURE__*/_react.default.createElement(NavStyles, null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    to: "/"
+  }, "Feed"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    to: "/addPost"
+  }, "Add a post"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    to: "/username"
+  }, "UserName")))));
+}
+
+var _default = Menu;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"component/App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36233,68 +36276,24 @@ var _AddPost = _interopRequireDefault(require("../component/AddPost"));
 
 var _Username = _interopRequireDefault(require("../component/Username"));
 
-var _user = _interopRequireDefault(require("../user.json"));
-
-var _styledComponents = _interopRequireDefault(require("styled-components"));
+var _Menu = _interopRequireDefault(require("../component/Menu"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flec-direction: row;\n    align-items= center;\n    justify-content: space-between;\n    li:nth-of-type(2) {\n        img {\n            border-radius: 25px;\n            max-width: 50px;\n        }\n    }\n"]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flec-direction: row;\n    align-items= center;\n    justify-content: space-between;\n    padding-left: 16px; \n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-var List = _styledComponents.default.ul(_templateObject());
-
-var ProfileUser = _styledComponents.default.ul(_templateObject2());
-
 function App() {
-  // const username = users.map((item) => {
-  //     return (
-  //         <ProfileUser key={item.id}>
-  //             <li><p>{item.name}</p></li>
-  //             <li><img src={item.profile} /></li>
-  //         </ProfileUser>
-  //     )
-  // })
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "ONJA FACEBOOK"), /*#__PURE__*/_react.default.createElement(List, null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-    to: "/"
-  }, "Feed"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-    to: "/addPost"
-  }, "Add a post"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("h2", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-    to: "username"
-  }, "UserName")))), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_Menu.default, null), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/"
   }, /*#__PURE__*/_react.default.createElement(_Feed.default, null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-    exact: true,
     path: "/addPost"
   }, /*#__PURE__*/_react.default.createElement(_AddPost.default, null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-    exact: true,
     path: "/username"
   }, /*#__PURE__*/_react.default.createElement(_Username.default, null))));
 }
 
 var _default = App;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../component/Feed":"component/Feed.js","../component/AddPost":"component/AddPost.js","../component/Username":"component/Username.js","../user.json":"user.json","styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../component/Feed":"component/Feed.js","../component/AddPost":"component/AddPost.js","../component/Username":"component/Username.js","../component/Menu":"component/Menu.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -36338,7 +36337,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56108" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59767" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

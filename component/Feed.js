@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { Context } from "./context";   
 
 function Feed() {
-    const { data, newComment } = useContext(Context);
+    const { state, newComment } = useContext(Context);
+    let { data } = state;
     
     return (
         <div className="feed_container">
