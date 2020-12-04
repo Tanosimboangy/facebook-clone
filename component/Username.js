@@ -2,9 +2,7 @@ import React from 'react'
 
 function Username() {
     return (
-        <div>
-            
-        </div>
+        <h3>Let's go !</h3>
     )
 }
 

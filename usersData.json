@@ -1,0 +1,21 @@
+[
+    {
+        "userId": "1",
+        "userName": "Mahasoa",
+        "profilePictureUrl": "https://picsum.photos/100",
+        "birthDate": "13/09/2000"
+    }
+    ,
+    {
+        "userId": "2",
+        "userName": "Franck",
+        "profilePictureUrl": "https://picsum.photos/100",
+        "birthDate": "13/02/1991"
+    },
+    {
+        "userId": "3",
+        "userName": "John Brown",
+        "profilePictureUrlPictureUrl": "https://picsum.photos/100",
+        "birthDate": "29/01/2003"
+    }
+]

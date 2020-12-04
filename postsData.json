@@ -1,0 +1,45 @@
+[
+    {
+     "postId": 1606804925429,
+     "date": 1606805013727,
+     "postTextContent": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+     "userId": 1,
+     "imgUrl":"https://picsum.photos/300/300",
+     "likes": [
+        {
+            "likeId": "1",
+            "userId": "1"
+        }
+    ],
+     "comments": [
+            {
+                "commentId": 1,
+                "userId": "1",
+                "date": 1606805035191,
+                "commentTextContent": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+            }
+        ]
+    },
+    {
+        "postId": 1606805084848,
+        "date": 1606805097283,
+        "postTextContent": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+        "userId": 2,
+        "imgUrl":"https://picsum.photos/seed/picsum/300/300",
+        "like": [
+            {
+                "likeId": "2",
+                "userId": "2"
+            }
+        ],
+        "comments": [
+            {
+                "commentId": 2,
+                "userId": "2",
+                "date": 1606805131709,
+                "commentTextContent": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+            }
+            
+        ]
+    } 
+]
