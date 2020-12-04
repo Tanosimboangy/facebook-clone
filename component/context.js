@@ -16,7 +16,7 @@ function ContextProvider({children}) {
             case 'UPDATE_COMMENTS_POSTS': {
                 return {
                     ...state,
-                    data: [...state.data, action.updatedList],
+                    data: [...state.data, action.newComment]
                 }
             }
             default: {
@@ -43,18 +43,20 @@ function ContextProvider({children}) {
                 "date": new Date().toLocaleDateString(),
             }
             const updatedList = data.map(item => {
-            if (item.id === id) {
+                if (item.id === id) {
                     return {
-                    ...item,
-                    comments: [...item.comments, addComment]
+                        ...item,
+                        comments: [...item.comments, addComment]
                 }
             }
             return item
         })
-        dispatch({type: "UPDATE_COMMENTS_POSTS", data: updatedList})
+        dispatch({type: "UPDATE_COMMENTS_POSTS", newComment})
         e.target.reset();
     }
-    
+
+    // console.log(data);
+
     function handleNewPost(e) {
         e.preventDefault();
         const el = e.target;
@@ -70,7 +72,6 @@ function ContextProvider({children}) {
         };
         dispatch({type: "ADD_NEW_POST", newPost: newPost})
         e.target.reset();
-        console.log(data);
     }
     
     return(

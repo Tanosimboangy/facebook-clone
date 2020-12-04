@@ -34042,7 +34042,7 @@ function ContextProvider(_ref) {
       case 'UPDATE_COMMENTS_POSTS':
         {
           return _objectSpread(_objectSpread({}, state), {}, {
-            data: [].concat(_toConsumableArray(state.data), [action.updatedList])
+            data: [].concat(_toConsumableArray(state.data), [action.newComment])
           });
         }
 
@@ -34085,10 +34085,11 @@ function ContextProvider(_ref) {
     });
     dispatch({
       type: "UPDATE_COMMENTS_POSTS",
-      data: updatedList
+      newComment: newComment
     });
     e.target.reset();
-  }
+  } // console.log(data);
+
 
   function handleNewPost(e) {
     e.preventDefault();
@@ -34109,7 +34110,6 @@ function ContextProvider(_ref) {
       newPost: newPost
     });
     e.target.reset();
-    console.log(data);
   }
 
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
@@ -36337,7 +36337,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59767" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51852" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

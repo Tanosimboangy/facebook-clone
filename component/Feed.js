@@ -42,7 +42,7 @@ function Feed() {
                             )
                         })}
                         <form onSubmit={e => newComment(e, item.id)}>
-                            <input type="text" name="comment" required/>
+                            <input type="text" name="comment"  required/>
                             <button type="submit">Post</button>
                         </form>
                     </article>

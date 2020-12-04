@@ -118,6 +118,11 @@ body .add_post button {
     max-width: 600px;
     margin: auto;
   }
+  body .add_post {
+    max-width: 70%;
+    margin: auto;
+    margin-top: 133px;
+  }
 }
 
 /*# sourceMappingURL=/facebook_clone.80ee2152.css.map */
