@@ -12,7 +12,7 @@
 }
 body {
   margin: 0;
-  font-family: "Lato_regular";
+  padding: 16px;
 }
 body ul {
   padding: 0;
@@ -26,6 +26,19 @@ body a {
 }
 body h1, body h2, body h3, body h4, body h5, body h6, body p {
   margin: 0;
+}
+body h1 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 720px) {
+  body {
+    margin: 0;
+    padding: 0;
+    max-width: 80%;
+    margin: auto;
+  }
 }
 
 /*# sourceMappingURL=/facebook_clone.80ee2152.css.map */
