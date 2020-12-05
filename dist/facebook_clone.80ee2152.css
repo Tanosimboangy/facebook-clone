@@ -12,7 +12,7 @@
 }
 body {
   margin: 0;
-  padding: 16px;
+  padding: 8px;
   font-family: "Lato_regular";
   background-color: #f0ecec2b;
 }
@@ -33,6 +33,63 @@ body h1 {
   padding-top: 10px;
   padding-bottom: 10px;
   color: blue;
+}
+body .add_post {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  max-width: 500px;
+  margin: auto;
+  background-color: #969494;
+  padding: 20px;
+  border-radius: 16px;
+}
+body .add_post label {
+  padding-bottom: 6px;
+  color: white;
+}
+body .add_post textarea {
+  background-color: white;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  height: 200px;
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 8px;
+  border: none;
+}
+body .add_post textarea:focus {
+  border: 1px solid blue;
+}
+body .add_post input {
+  border: none;
+  background-color: white;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 20px;
+}
+body .add_post input:focus {
+  border: 1px solid blue;
+  box-shadow: none;
+}
+body .add_post button {
+  border-radius: 10px;
+  background-color: #cbcbcb;
+  color: blue;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 100px;
+  padding: 10px 20px;
+}
+body .add_post button:hover {
+  background-color: black;
+  color: white;
 }
 
 @media (min-width: 720px) {

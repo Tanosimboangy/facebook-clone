@@ -22,7 +22,7 @@
 
 body {
     margin: 0;
-    padding: 16px;
+    padding: 8px;
     font-family: "Lato_regular";
     background-color: #f0ecec2b;
     ul {
@@ -43,7 +43,65 @@ body {
       padding-bottom: 10px;
       color: blue;
     }
+    .add_post {
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      max-width: 500px;
+      margin: auto;
+      background-color: rgb(150, 148, 148);
+      padding: 20px;
+      border-radius: 16px;
+      label {
+        padding-bottom: 6px;
+        color: white;
+      }
+      textarea {
+        background-color: white;
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 10px;
+        height: 200px;
+        outline: none;
+        cursor: pointer;
+        margin-bottom: 8px;
+        border: none;
+      }
+      textarea:focus {
+        border: 1px solid blue;
+      }
+      input {
+        border: none;
+        background-color: white;
+        padding: 16px;
+        border-radius: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        outline: none;
+        margin-bottom: 20px;
+      }
+      input:focus {
+        border: 1px solid blue;
+        box-shadow: none;
+      }
+      button {
+        border-radius: 10px;
+        background-color: rgb(203, 203, 203);
+        color: blue;
+        font-size: 20px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        width: 100px;
+        padding: 10px 20px;
+      }
+      button:hover {
+        background-color: black;
+        color: white;
+      }
+  }
 }
+
 @media(min-width: 720px) {
   body {
     margin: 0;

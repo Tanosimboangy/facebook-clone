@@ -35,6 +35,21 @@ function ContextProvider({children}) {
                     data: [...state.data, action.newPost],
                 };
             }
+            case 'DISLIKE': {
+                const newPosts = state.data.map(item => {
+                    if (item.postId === action.postId) {
+                        return {
+                            ...item,
+                            likes: item.likes.filter(like => like.userId !== state.currentUser),
+                        };
+                    }
+                    return item;
+                });
+                return {
+                    ...state,
+                    data: newPosts,
+                };
+            }
             default: {
                 console.error("No action for type", action.type);
                 break;

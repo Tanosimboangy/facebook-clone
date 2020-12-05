@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../component/context';
 
-export default function AddPost() {
+function AddPost() {
 	const [postContent, setPostContent] = useState('');
 	const [postImage, setPostImage] = useState('http://picsum.photos/400');
 
@@ -28,26 +28,25 @@ export default function AddPost() {
 	}
 
 	return (
-		<div>
-			<h2>Add a post</h2>
-			<form onSubmit={createNewPost}>
-				<label>New post content:</label>
-				<textarea
-					placeholder="Say what's on your mind..."
-					value={postContent}
-					onChange={e => setPostContent(e.target.value)}
-					required
-				/>
-				<label>New post picture :</label>
-				<input
-					type="url"
-					placeholder="Paste a picture url here"
-					value={postImage}
-					onChange={e => setPostImage(e.target.value)}
-					required
-				/>
-				<button>Post</button>
-			</form>
-		</div>
+        <form className="add_post" onSubmit={createNewPost}>
+            <label>New post content:</label>
+            <textarea
+                placeholder="Say what's on your mind..."
+                value={postContent}
+                onChange={e => setPostContent(e.target.value)}
+                required
+            />
+            <label>New post picture :</label>
+            <input
+                type="url"
+                placeholder="Paste a picture url here"
+                value={postImage}
+                onChange={e => setPostImage(e.target.value)}
+                required
+            />
+            <button>Post</button>
+        </form>
 	);
 }
+
+export default AddPost;
