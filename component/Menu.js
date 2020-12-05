@@ -7,10 +7,14 @@ const ListStyled = styled.ul`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     padding-bottom: 20px;
     li {
         a {
             font-size: 20px;
+            color: blue;
+            font-weight: 900;
+            text-transform: uppercase;
         }
     }
 `

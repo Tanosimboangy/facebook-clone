@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { Context } from "../component/context";
+import Posts from "../component/Posts";
 
 function Feed() {
-    return (
-        <h3>Hello darling !</h3>
-    )
+    const { state } = useContext(Context);
+    const { data, usersData, currentUser } = state;
+
+    return <Posts 
+        data={data} 
+        usersData={usersData} 
+        currentUser={currentUser} 
+        />
 }
 
-export default Feed
+export default Feed;

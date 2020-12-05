@@ -11,9 +11,15 @@ function App() {
             <h1>My Facebook App</h1>
             <Menu />
             <Switch>
-                <Route exact path="/"><Feed /></Route>
-                <Route path="/addPost"><AddPost /></Route>
-                <Route path="/options"><Username /></Route>
+                <Route exact path="/">
+                    <Feed />
+                </Route>
+                <Route path="/addPost">
+                    <AddPost />
+                </Route>
+                <Route path="/options">
+                    <Username />
+                </Route>
             </Switch>
         </div>
     )
