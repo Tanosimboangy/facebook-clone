@@ -30,8 +30,8 @@ body h1, body h2, body h3, body h4, body h5, body h6, body p {
   margin: 0;
 }
 body h1 {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   color: blue;
 }
 

@@ -1,10 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const PostContainer = styled.div`
+    max-width: 240px;
+    border-radius: 12px;
+    padding: 16px;
+    margin-right: auto;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 3px blue;
+    background-color: white;
+`
 const UserDetails = styled.ul`
-    display: grid;
-	gap: 20px;
-	grid-template-columns: auto 1fr 1fr;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
 	align-items: center;
     padding-bottom: 10px;
     li {
@@ -15,15 +25,6 @@ const UserDetails = styled.ul`
 	    }
     }
 `
-const PostContainer = styled.div`
-    max-width: 300px;
-    border-radius: 12px;
-    padding: 16px;
-    margin-right: auto;
-    margin-bottom: 20px;
-    box-shadow: 0px 0px 3px blue;
-    background-color: white;
-`
 const PostContent = styled.ul`
     p {
         font-size: 20px;
@@ -32,10 +33,27 @@ const PostContent = styled.ul`
     img {
         max-width: 90%;
         border-radius: 8px;
+        margin-bottom: 10px;
     }
 `
-function Posts({data, usersData, currentUser}) {
+const PostLike = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100px;
+`
+
+function Posts({data, usersData, currentUser, dispatch}) {
     const currentUserObj = usersData.find(user => user.userId === currentUser);
+
+    function likePost() {
+		const newLike = {
+			likeId: Date.now(),
+			userId: currentUser,
+		};
+		dispatch({ type: 'LIKE', newLike, postId: item.postId });
+	}
 
     return (
         <>
@@ -51,6 +69,10 @@ function Posts({data, usersData, currentUser}) {
                             <li><p>{item.postTextContent}</p></li>
                             <li><img src={item.imgUrl}/></li>
                         </PostContent>
+                        <PostLike>
+                            {item.likes.some(like => like.userId === currentUser) ? <button>Dislike</button> : <button onClick={likePost}>like</button>}
+                            <span>{item.likes.length}</span>
+                        </PostLike>
                     </PostContainer>
                 )
             })}

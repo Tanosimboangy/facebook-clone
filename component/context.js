@@ -14,6 +14,27 @@ function ContextProvider({children}) {
                     usersData: users,
                 }
             }
+            case 'LIKE': {
+                const newData = state.data.map(item => {
+                    if (item.postId === action.postId) {
+                        return {
+                            ...item,
+                            likes: [...item.likes, action.newLike],
+                        };
+                    }
+                    return item;
+                });
+                return {
+                    ...state,
+                    data: newData,
+                };
+            }
+            case 'NEW_POST': {
+                return {
+                    ...state,
+                    data: [...state.data, action.newPost],
+                };
+            }
             default: {
                 console.error("No action for type", action.type);
                 break;

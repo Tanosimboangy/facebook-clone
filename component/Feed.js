@@ -4,12 +4,13 @@ import Posts from "../component/Posts";
 
 function Feed() {
     const { state } = useContext(Context);
-    const { data, usersData, currentUser } = state;
+    const { data, usersData, currentUser, dispatch } = state;
 
     return <Posts 
         data={data} 
         usersData={usersData} 
         currentUser={currentUser} 
+        dispatch={dispatch}
         />
 }
 

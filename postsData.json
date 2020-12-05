@@ -9,6 +9,10 @@
         {
             "likeId": "1",
             "userId": "1"
+        },
+        {
+            "likeId": "2",
+            "userId": "2"
         }
     ],
      "comments": [
@@ -26,7 +30,7 @@
         "postTextContent": "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
         "userId": 2,
         "imgUrl":"https://picsum.photos/seed/picsum/300/300",
-        "like": [
+        "likes": [
             {
                 "likeId": "2",
                 "userId": "2"
