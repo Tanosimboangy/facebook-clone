@@ -50,6 +50,21 @@ function ContextProvider({children}) {
                     data: newPosts,
                 };
             }
+            case 'ADD_NEW_COMMENT': {
+                const newComment = state.data.map(item => {
+                    if (item.postId === action.postId) {
+                        return {
+                            ...item,
+                            comments: [...item.comments, action.newComments],
+                        };
+                    }
+                    return item;
+                });
+                return {
+                    ...state,
+                    data: newComment,
+                };
+            }
             default: {
                 console.error("No action for type", action.type);
                 break;

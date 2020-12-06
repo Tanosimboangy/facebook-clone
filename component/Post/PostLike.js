@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import { Context } from "../context";
 import styled from 'styled-components';
+import thumb_up from '../../img/thumb_up.svg';
+import thumb_down from '../../img/thumb_down.svg';
 
 const Postlike = styled.div`
     display: flex;
@@ -8,7 +10,14 @@ const Postlike = styled.div`
     justify-content: space-between;
     align-items: center;
     max-width: 100px;
+    padding-bottom: 10px;
+    img {
+        background-color: blue;
+        padding: 5px;
+        border-radius: 50%;
+    }
 `
+
 
 function PostLike({item, currentUser}) {
     const { state, dispatch } = useContext(Context);
@@ -26,8 +35,10 @@ function PostLike({item, currentUser}) {
 
     return (
         <Postlike>
-            {item.likes.some(like => like.userId === currentUser) ? <button onClick={dislike}>Dislike</button> : <button onClick={likePost}>like</button>}
-            <span>{item.likes.length}</span>
+            {item.likes.some(like => like.userId === currentUser) ? 
+                <img onClick={dislike} src={thumb_up} alt="dislike"/> : 
+                <img onClick={likePost} src={thumb_down} alt="like"/>}
+            <span><b>{item.likes.length}</b></span>
         </Postlike>
     )
 }

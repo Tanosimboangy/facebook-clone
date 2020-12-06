@@ -15,6 +15,9 @@ body {
   padding: 8px;
   font-family: "Lato_regular";
   background-color: #f0ecec2b;
+  background-image: url(/background.004d778f.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 body ul {
   padding: 0;
@@ -40,7 +43,6 @@ body .add_post {
   font-size: 18px;
   max-width: 500px;
   margin: auto;
-  background-color: #969494;
   padding: 20px;
   border-radius: 16px;
 }
@@ -77,19 +79,21 @@ body .add_post input:focus {
   box-shadow: none;
 }
 body .add_post button {
-  border-radius: 10px;
-  background-color: #cbcbcb;
-  color: blue;
-  font-size: 20px;
-  border: none;
-  outline: none;
+  border: 0;
+  line-height: 2.5;
+  padding: 0 20px;
+  font-size: 1rem;
+  text-align: center;
   cursor: pointer;
-  width: 100px;
-  padding: 10px 20px;
-}
-body .add_post button:hover {
-  background-color: black;
-  color: white;
+  outline: none;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 10px;
+  background-color: #dc0000;
+  background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+  box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+  width: 80px;
+  margin-left: auto;
 }
 
 @media (min-width: 720px) {

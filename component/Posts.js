@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import UserDetails from '../component/Post/UserDetails';
 import PostContent from '../component/Post/PostContent';
 import PostLike from '../component/Post/PostLike';
+import PostComment from './Post/PostComment';
 
 const PostContainer = styled.div`
-    max-width: 240px;
+    max-width: 280px;
     border-radius: 12px;
     padding: 16px;
     margin-right: auto;
@@ -13,7 +14,6 @@ const PostContainer = styled.div`
     box-shadow: 0px 0px 3px blue;
     background-color: white;
 `
-
 
 function Posts({data, usersData, currentUser}) {
     const currentUserObj = usersData.find(user => user.userId === currentUser);
@@ -33,6 +33,11 @@ function Posts({data, usersData, currentUser}) {
                         <PostLike 
                             item={item} 
                             currentUser={currentUser} 
+                        />
+                        < PostComment 
+                            item={item}
+                            usersData={usersData}
+                            currentUser={currentUser}
                         />
                     </PostContainer>
                 )
